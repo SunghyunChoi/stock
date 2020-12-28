@@ -9,3 +9,6 @@ import sys
 x = "model x"
 y = "model y"
 
+print("여기는 내꺼다")
+
+print("여기는 승 브랜치")
