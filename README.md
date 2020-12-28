@@ -1,6 +1,9 @@
 # stock
 SW Jungle Web Project
 
-제 이름은 강민규입니다. 
+yeeun yeeun 
 
-리드미 망치기
+여기는 제껍니다 
+
+
+
