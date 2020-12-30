@@ -79,7 +79,7 @@ DATABASES = {
         'NAME': 'stock',
         'USER': 'coderkang',
         'PASSWORD': '123123',
-        'HOST':'54.180.94.223',
+        'HOST': '54.180.94.223',
         'PORT': '3306',
     }
 }
