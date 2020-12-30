@@ -37,8 +37,6 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    # Add our new application
-    'catalog.apps.CatalogConfig',
 ]
 
 MIDDLEWARE = [
@@ -81,7 +79,7 @@ DATABASES = {
         'NAME': 'stock',
         'USER': 'coderkang',
         'PASSWORD': '123123',
-        'HOST': 'localhost',
+        'HOST':'54.180.94.223',
         'PORT': '3306',
     }
 }
