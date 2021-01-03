@@ -1,14 +1,15 @@
 import requests
 import pandas as pd
 import re  # 정규표현식
+from news.models import News
 
 
 class naver_news:
-    def __init__(self):
+    def __init__(self, word):
         self.client_id = "2QV1qN7c3L6Te7OJsrbi"
         self.client_secret = "yBTGdL1ezi"
 
-        self.search_word = "코스피"
+        self.search_word = word
         self.encode_type = "json"  # 출력방식 json or xml
         self.max_display = 20  # 출력 뉴스수
         self.sort = "date"  # date 시간순, sim 관련도 순
@@ -39,14 +40,19 @@ class naver_news:
             lambda x: clean_html(x)
         )
 
-        return self.news_df[2:3]["description"]
+        return self.news_df
 
     def save_csv(self):
         self.news_df.to_csv(f"news_search_result_{self.search_word}.csv")
 
 
-# test--------------------------
-test = naver_news()
-# 요청 결과 보기 200 이면 정상적으로 요청 완료
-print(test.requests())
-test.save_csv()
+test = naver_news("hmm")
+result = test.requests()
+for i in range(20):
+    new_news = News()
+    news = result[i : i + 1]
+    new_news.subject = news["title"]
+    new_news.content = news["description"]
+    new_news.url = news["originallink"]
+    new_news.created_at = news["pubDate"]
+    new_news.save()
