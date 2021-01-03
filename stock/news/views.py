@@ -1,8 +1,9 @@
 from django.shortcuts import render
-
-# Create your views here.
 from django.http import HttpResponse
 
 
 def index(request):
-    return render(request, 'base.html')
+    keyword = request.GET.get('keyword')
+    print(keyword)
+    context = {'keyword': keyword, }
+    return render(request, 'base.html', context)
