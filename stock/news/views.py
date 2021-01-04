@@ -24,11 +24,12 @@ def index(request):
     results = News.objects.filter(keyword=keyword)
     newses = []
     for result in results:
-        subject = result.subject
-        content = result.content
-        created_date = result.created_date
-        url = result.url
-        news = [subject, content, created_date, url]
+        news = {
+            "subject": result.subject,
+            "content": result.content,
+            "created_date": result.created_date,
+            "url": result.url,
+        }
         newses.append(news)
     context = {
         "keyword": keyword,

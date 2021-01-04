@@ -12,6 +12,13 @@
     <h3>오늘의 키워드</h3>
     <a href="?keyword=HMM">HMM</a>
     <h5>검색한 키워드: {{ keyword }}</h5>
+    {% for news in newses %}
+    <hr>
+    <h3>{{ news.subject }}</h3>
+    <h4>{{ news.content }}</h4>
+    <h6>{{ news.created_date }}</h6>
+    <a href="{{ news.url }}">바로가기</a>
+    {% endfor %}
 </body>
 
 </html>
