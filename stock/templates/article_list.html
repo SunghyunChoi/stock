@@ -1,0 +1,10 @@
+{% if article_list %}
+    <ul>
+    {% for article in article_list %}
+        <li><a href="/mainboard/{{ article.id }}/">{{ article.subject }}</a></li>
+    {% endfor %}
+    <a href="{% url 'mainboard:article_create' %}" class="btn btn-primary">게시글 등록하기</a>
+    </ul>
+{% else %}
+    <p>게시글이 없습니다.</p>
+{% endif %}

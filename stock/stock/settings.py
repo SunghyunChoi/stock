@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 CUSTOM_APPS = [
     'news.apps.NewsConfig',
+    'mainboard.apps.MainboardConfig',
 ]
 
 INSTALLED_APPS = [
