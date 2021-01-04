@@ -9,10 +9,7 @@ mysqlclient = "*"
 requests = "*"
 bs4 = "*"
 pandas = "*"
-<<<<<<< HEAD
 numpy = "==1.19.3"
-=======
->>>>>>> 730d3b00588ee5062433853caa0a8bdae1c5fd20
 
 [dev-packages]
 flake8 = "*"
