@@ -1,10 +1,8 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-from bs4 import BeautifulSoup
 import requests
 
 # ---
-import requests
 import pandas as pd
 import re  # 정규표현식
 from .models import News
@@ -12,17 +10,30 @@ from .models import News
 
 def index(request):
     keyword = request.GET.get("keyword")
-    print(keyword)
+    if keyword:
+        # 키워드 검색 결과가 없을 때만 작동합니다.
+        result = News.objects.filter(keyword=keyword)
+        if not result:
+            test = naver_news(keyword)
+            test.requests()
+            test.save_db()
+
+    """
+    여기에 서버사이드 렌더링을 위한 데이터 받아오기
+    """
+    results = News.objects.filter(keyword=keyword)
+    newses = []
+    for result in results:
+        subject = result.subject
+        content = result.content
+        created_date = result.created_date
+        url = result.url
+        news = [subject, content, created_date, url]
+        newses.append(news)
     context = {
         "keyword": keyword,
+        "newses": newses,
     }
-    # test--------------------------
-    test = naver_news("코스피,주가,경제")
-    # 요청 결과 보기 200 이면 정상적으로 요청 완료
-    print(test.requests())
-    test.save_db()
-    print("db success")
-
     return render(request, "base.html", context)
 
 
@@ -33,7 +44,7 @@ class naver_news:
 
         self.search_word = keyword_recieved
         self.encode_type = "json"  # 출력방식 json or xml
-        self.max_display = 5  # 출력 뉴스수
+        self.max_display = 20  # 출력 뉴스수, 나중에 환경변수로 바꾸기
         self.sort = "sim"  # date 시간순, sim 관련도 순
         self.start = 1  # 출력 위치
         self.url = f"https://openapi.naver.com/v1/search/news.{self.encode_type}?query={self.search_word}&display={str(int(self.max_display))}&start={str(int(self.start))}&sort={self.sort}"
@@ -72,6 +83,7 @@ class naver_news:
             news = News()
             news.subject = str(self.news_df.iloc[i]["title"])
             news.content = self.news_df.iloc[i]["description"]
-            news.created_data = self.news_df.iloc[i]["pubDate"]
+            news.created_date = self.news_df.iloc[i]["pubDate"]
             news.url = self.news_df.iloc[i]["originallink"]
+            news.keyword = self.search_word
             news.save()
