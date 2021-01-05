@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models.query import QuerySet
 
 # Create your models here.
 class Question(models.Model):
@@ -9,3 +10,39 @@ class Question(models.Model):
 
     class Meta:
         db_table='questions'
+
+class Choice(models.Model):
+    choice = models.CharField(max_length=500, null=True)
+    question = models.ForeignKey(Question, on_delete=models.SET_NULL, null=True)
+    created_at = models.DateTimeField(auto_now_add= True)
+    updated_at = models.DateTimeField(auto_now = True)
+
+    class Meta:
+        db_table='choices'
+
+class Case(models.Model):
+    name = models.CharField(max_length=100, null=True)
+    created_at = models.DateTimeField(auto_now_add= True)
+    updated_at = models.DateTimeField(auto_now = True)
+
+    class Meta:
+        db_table='cases'
+
+class Response(models.Model):
+    question = models.ForeignKey(Question, on_delete=models.SET_NULL, null=True)
+    choice = models.ForeignKey(Choice, on_delete=models.SET_NULL, null=True)
+    created_at = models.DateTimeField(auto_now_add= True)
+
+    class Meta:
+        db_table='responses'
+
+class Result(models.Model):
+    name = models.CharField(max_length=500, null=True)
+    description = models.TextField(null=True)
+    case = models.ForeignKey(Case, on_delete=models.SET_NULL, null=True)
+    image_url = models.URLField(max_length=2000, null=True)
+    created_at = models.DateTimeField(auto_now_add= True)
+    updated_at = models.DateTimeField(auto_now = True)
+
+    class Meta:
+        db_table='results'
