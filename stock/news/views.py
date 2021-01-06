@@ -68,7 +68,8 @@ class naver_news:
             x = re.sub("<.*?>", "", x)
             return x
 
-        self.news_df["title"] = self.news_df["title"].apply(lambda x: clean_html(x))
+        self.news_df["title"] = self.news_df["title"].apply(
+            lambda x: clean_html(x))
         self.news_df["description"] = self.news_df["description"].apply(
             lambda x: clean_html(x)
         )
