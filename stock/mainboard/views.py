@@ -7,7 +7,6 @@ from .models import Article, Comment
 
 
 def index(request):
-
     article_list = Article.objects.order_by('-create_date')
     context = {'article_list' : article_list}
 
