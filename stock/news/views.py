@@ -41,9 +41,9 @@ def index(request):
     # r = LG()
     # r.save_db()
     #######################
-    r1 = kb_report()
-    r1.requests()
-    r1.save_db()
+    # r1 = kb_report()
+    # r1.requests()
+    # r1.save_db()
 
     return render(request, "base.html", context)
 
