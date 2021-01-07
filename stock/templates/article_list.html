@@ -5,8 +5,60 @@
 {% if article_list %}
     <ul>
     {% for article in article_list %}
-        <li><a href="/mainboard/{{ article.id }}/">{{ article.subject }}</a></li>
+        <li><a href="/mainboard/{{ article.id }}/">{{ article.subject }}</a>
+        
+        {% comment %} 이 밑의 if~endif 는 질문에 달린 답변의 개수 표시하기에 따른 변경내용 {% endcomment %}
+        {% if article.comment_set.count > 0 %}
+        <span class="text-danger small ml-2">{{ article.comment_set.count }}</span>
+        {% endif %}
+
+        {% comment %} 밑의 </li> 는 질문에 달린 답변의 개수 표시하기 따라 변경되었따. {% endcomment %}
+        </li>
     {% endfor %}
+
+{% comment %} (... 생략 ...) 나중에 부트스트랩바꾸면 여기를 참조할것
+    </table> {% endcomment %}
+<!-- ------------------------------- [edit] -------------------------------- -->
+    <!-- 페이징처리 시작 -->
+    <ul class="pagination justify-content-center">
+        <!-- 이전페이지 -->
+        {% if article_list.has_previous %}
+        <li class="page-item">
+            <a class="page-link" href="?page={{ article_list.previous_page_number }}">이전</a>
+        </li>
+        {% else %}
+        <li class="page-item disabled">
+            <a class="page-link" tabindex="-1" aria-disabled="true" href="#">이전</a>
+        </li>
+        {% endif %}
+        <!-- 페이지리스트 -->
+        {% for page_number in article_list.paginator.page_range %}
+            {% if page_number >= article_list.number|add:-5 and page_number <= article_list.number|add:5 %}
+            {% if page_number == article_list.number %}
+            <li class="page-item active" aria-current="page">
+                <a class="page-link" href="?page={{ page_number }}">{{ page_number }}</a>
+            </li>
+            {% else %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ page_number }}">{{ page_number }}</a>
+            </li>
+            {% endif %}
+            {% endif %}
+        {% endfor %}
+        <!-- 다음페이지 -->
+        {% if article_list.has_next %}
+        <li class="page-item">
+            <a class="page-link" href="?page={{ article_list.next_page_number }}">다음</a>
+        </li>
+        {% else %}
+        <li class="page-item disabled">
+            <a class="page-link" tabindex="-1" aria-disabled="true" href="#">다음</a>
+        </li>
+        {% endif %}
+    </ul>
+    <!-- 페이징처리 끝 -->
+<!-- ----------------------------------------------------------------------- -->    
+
     <a href="{% url 'mainboard:article_create' %}" class="btn btn-primary">게시글 등록하기</a>
     </ul>
 {% else %}
