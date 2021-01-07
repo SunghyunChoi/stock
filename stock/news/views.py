@@ -1,6 +1,8 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from modules.lg import LG
+from modules.kb_column import kb_report
+
 import requests
 
 # ---
@@ -36,9 +38,13 @@ def index(request):
         "keyword": keyword,
         "newses": newses,
     }
-    r = LG()
-    r.req()
-    r.save_db()
+    # r = LG()
+    # r.save_db()
+    #######################
+    r1 = kb_report()
+    r1.requests()
+    r1.save_db()
+
     return render(request, "base.html", context)
 
 
