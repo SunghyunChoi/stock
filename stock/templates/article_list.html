@@ -1,3 +1,7 @@
+{% extends 'temp_base.html' %}
+{% block content %}
+
+
 {% if article_list %}
     <ul>
     {% for article in article_list %}
@@ -8,3 +12,13 @@
 {% else %}
     <p>게시글이 없습니다.</p>
 {% endif %}
+
+
+
+
+
+{% if user.is_authenticated %}
+    <a class="nav-link" href="{% url 'common:logout' %}">{{ user.username }} (로그아웃)</a>
+
+{% endif %}
+{% endblock %}

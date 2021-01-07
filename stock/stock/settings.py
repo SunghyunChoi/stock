@@ -32,6 +32,7 @@ ALLOWED_HOSTS = []
 CUSTOM_APPS = [
     'news.apps.NewsConfig',
     'mainboard.apps.MainboardConfig',
+    'common.apps.CommonConfig',
 ]
 
 INSTALLED_APPS = [
@@ -112,7 +113,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/3.1/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'ko-kr'
 
 TIME_ZONE = 'UTC'
 
@@ -127,3 +128,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
+STATICFILES_DIRS = [
+    BASE_DIR / 'static',
+]
+
+LOGIN_REDIRECT_URL = '/mainboard/'
+LOGOUT_REDIRECT_URL = '/mainboard/'
+

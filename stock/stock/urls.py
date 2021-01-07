@@ -20,4 +20,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('news/', include('news.urls')),
     path('mainboard/', include('mainboard.urls')),
+    path('common/', include('common.urls')),
+    # path('', views.index, name='index'), # 홈화면으로 리다이렉트
 ]
