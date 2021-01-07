@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from modules.lg import LG
 import requests
 
 # ---
@@ -35,6 +36,9 @@ def index(request):
         "keyword": keyword,
         "newses": newses,
     }
+    r = LG()
+    r.req()
+    r.save_db()
     return render(request, "base.html", context)
 
 
@@ -68,8 +72,7 @@ class naver_news:
             x = re.sub("<.*?>", "", x)
             return x
 
-        self.news_df["title"] = self.news_df["title"].apply(
-            lambda x: clean_html(x))
+        self.news_df["title"] = self.news_df["title"].apply(lambda x: clean_html(x))
         self.news_df["description"] = self.news_df["description"].apply(
             lambda x: clean_html(x)
         )

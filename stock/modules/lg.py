@@ -1,3 +1,4 @@
+from news.models import Column
 from bs4 import BeautifulSoup
 import requests
 
@@ -14,19 +15,19 @@ class LG:
         )
         lists = soup.select("#container_left > div.list_area > dl.article_list")
 
-        self.articles = []
+        articles = []
         for article in lists:
             a_tag = article.select("dt > a")
             title = a_tag[0].getText()
             url = a_tag[0]["href"]
-            self.articles.append({"title": title, "url": url})
-        return self.articles
+            articles.append({"title": title, "url": url})
+        return articles
 
     def save_db(self):
-        self.req(self)
-        for article in range(len(self.articles)):
-            pass
-
-
-r = LG()
-print(r.req())
+        articles = self.req()
+        for article in articles:
+            column = Column()
+            column.title = article["title"]
+            column.url = article["url"]
+            column.save()
+        return 0
