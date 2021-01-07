@@ -10,3 +10,11 @@ class News(models.Model):
 
     def __str__(self):
         return self.subject
+
+
+class Column(models.Model):
+    title = models.TextField()
+    url = models.TextField()
+
+    def __str__(self):
+        return self.title
