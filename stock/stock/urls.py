@@ -17,9 +17,10 @@ from django.contrib import admin
 from django.urls import path, include
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('news/', include('news.urls')),
-    path('mainboard/', include('mainboard.urls')),
-    path('common/', include('common.urls')),
+    path("admin/", admin.site.urls),
+    path("news/", include("news.urls")),
+    path("api/", include("rest_api.urls")),
+    path("mainboard/", include("mainboard.urls")),
+    path("common/", include("common.urls")),
     # path('', views.index, name='index'), # 홈화면으로 리다이렉트
 ]

@@ -13,7 +13,7 @@ class News(models.Model):
 
 
 class Column(models.Model):
-    title = models.TextField()
+    subject = models.TextField()
     url = models.TextField()
 
     def __str__(self):
