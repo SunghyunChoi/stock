@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://code.jquery.com/jquery-3.5.1.js"
+        integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+    <script>
+        function getNews() {
+            $.ajax({
+                url: "/api/news",
+                type: "POST",
+                data: { mode: "news" },
+                success: function (request) {
+
+                    return
+                }
+
+            })
+        }
+
+        function getColumn() {
+            $.ajax({
+                url: "/api/news",
+                type: "POST",
+                data: { mode: "column" },
+                success: function (request) {
+
+                    return
+                }
+
+            })
+        }
+
+    </script>
+</head>
+
+<body>
+    <h1>주식해커스</h1>
+    <button onclick="getNews()">뉴스</button>
+    <button onclick="getColumn()">칼럼</button>
+    <h3>오늘의 키워드</h3>
+    <a href="?keyword=HMM">HMM</a>
+    <h5>검색한 키워드: {{ keyword }}</h5>
+    {% for news in newses %}
+    <hr>
+    <h3>{{ news.subject }}</h3>
+    <h4>{{ news.content }}</h4>
+    <h6>{{ news.created_date }}</h6>
+    <a href="{{ news.url }}">바로가기</a>
+    {% endfor %}
+</body>
+
+</html>
