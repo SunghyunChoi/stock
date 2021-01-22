@@ -27,8 +27,6 @@ def detail(request, article_id):
     context = {'article': article}
     return render(request, 'article_detail.html', context)
 
-
-
 def article_create(request):
     if request.method == 'POST':
         form = ArticleForm(request.POST)
