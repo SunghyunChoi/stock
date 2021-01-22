@@ -34,6 +34,7 @@ CUSTOM_APPS = [
     "mainboard.apps.MainboardConfig",
     "common.apps.CommonConfig",
     "rest_api.apps.RestApiConfig",
+    "exchange.apps.ExchangeConfig",
 ]
 
 INSTALLED_APPS = [
