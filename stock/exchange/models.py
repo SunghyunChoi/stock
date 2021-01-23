@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
 
+
 class Stock_list(models.Model):
     market_name = models.CharField(max_length=50)
     symbol = models.IntegerField(max_length=50)
