@@ -15,6 +15,9 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.conf import settings
+from django.conf.urls.static import static
+
 
 urlpatterns = [
     path("admin/", admin.site.urls),
@@ -22,5 +25,6 @@ urlpatterns = [
     path("api/", include("rest_api.urls")),
     path("mainboard/", include("mainboard.urls")),
     path("common/", include("common.urls")),
+    path("exchange/", include("exchange.urls")),
     # path('', views.index, name='index'), # 홈화면으로 리다이렉트
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

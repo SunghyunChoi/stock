@@ -12,6 +12,7 @@ pandas = "*"
 numpy = "==1.19.3"
 matplotlib = "*"
 finance-datareader = "*"
+mplfinance = "*"
 
 [dev-packages]
 flake8 = "*"
