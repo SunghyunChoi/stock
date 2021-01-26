@@ -5,7 +5,7 @@ from django.utils import timezone
 
 class Stock_list(models.Model):
     market_name = models.CharField(max_length=50)
-    symbol = models.IntegerField()
+    symbol = models.CharField(max_length=50)
     stock_name = models.CharField(max_length=100)
     cur_price = models.IntegerField()
 
