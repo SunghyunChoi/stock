@@ -25,19 +25,21 @@
         <thead>
         <tr class="thead-dark">
         {% comment %} 하위 3개 바뀜 {% endcomment %}
-            <th>종목번호</th>
-            <th>종목이름</th>
+            <th>시장</th>
+            <th>종목 번호</th>
+            <th>종목 이름</th>
+            <th>현재 가격</th>
         </tr>
         </thead>
         <tbody>
         {% comment %} article_list -> stock_list, article -> stock
-        article.id -> stock.name, article.subject-> stock.id  {% endcomment %}
+        article.id -> stock.name, article.subject-> symbol  {% endcomment %}
         {% if stock_list %}
         {% for stock in stock_list %}
         <tr>
             <td>{{ forloop.counter }}</td>
             <td>
-                <a href="{% url 'mainboard:detail' stock.name %}">{{ stock.id }}</a>
+                <a href="{% url 'exchange:detail' stock.name %}">{{ symbol }}</a>
             </td>
         </tr>
         {% endfor %}

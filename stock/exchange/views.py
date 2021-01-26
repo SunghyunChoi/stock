@@ -13,12 +13,22 @@ from django.http import HttpResponse
 # Create your views here.
 def index(request):
     
-    # return HttpResponse("안녕하세요 pybo에 오신것을 환영합니다.")
-    return render(request, 'exchange/stocklist.html')
+    # stock_name 이 str인데 정렬이 성립하는가? -stock_name을 symbol순으로 바꿀 것
+    stock_list = Stock_list.objects.order_by('stock_name')
+
+
+    context = {'stock_list': stock_list}
+    return render(request, 'exchange/stocklist.html', context)
     # return HttpResponse("exchange")
 # 그래프 보여주는 부분 (수정 예정)
 # home.html(가칭)에 img src 에도 추가해줘야함
 
+
+def detail(request, symbol):
+    "작업중"
+    stock_list = Question.objects.get(id=symbol)
+    context = {'stock_list': stock_list}
+    return render(request, 'exchange/stock_list_detail.html', context)
 
 
 def home(request):
