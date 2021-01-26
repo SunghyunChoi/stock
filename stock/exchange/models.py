@@ -8,7 +8,6 @@ class Stock_list(models.Model):
     symbol = models.IntegerField()
     stock_name = models.CharField(max_length=100)
     cur_price = models.IntegerField()
-    stock_ID = models.IntegerField()
 
 class Stock_search_page(models.Model):
     stock_ID = models.ForeignKey(Stock_list, on_delete=models.CASCADE)
