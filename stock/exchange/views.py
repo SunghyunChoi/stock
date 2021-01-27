@@ -15,7 +15,7 @@ def index(request):
     
     # stock_name 이 str인데 정렬이 성립하는가? -stock_name을 symbol순으로 바꿀 것
     stock_list = Stock_list.objects.order_by('stock_name')
-
+    
 
     context = {'stock_list': stock_list}
     return render(request, 'exchange/stocklist.html', context)
