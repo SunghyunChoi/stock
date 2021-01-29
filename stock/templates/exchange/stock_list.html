@@ -18,25 +18,20 @@
         {% for stock in stock_list %}
         <tr>
             <td>{{ forloop.counter }}</td>
-            <td>
-
                 <a href="{% url 'exchange:detail' stock.symbol %}">{{ stock.subject }}</a>
-            {% comment %} 댓글 개수 끝 {% endcomment %}
             </td>
             <td>{{ stock.cur_price }}</td>
         </tr>
         {% endfor %}
         {% else %}
         <tr>
-            <td colspan="3">게시글이 없습니다.</td>
+            <td colspan="3">검색 요청에 맞는 종목이 없습니다.</td>
         </tr>
         {% endif %}
         </tbody>
     </table>
 </div>
              
-{% comment %} (... 생략 ...) 나중에 부트스트랩바꾸면 여기를 참조할것
-    </table> {% endcomment %}
 <!-- ------------------------------- [edit] -------------------------------- -->
     <!-- 페이징처리 시작 -->
     <ul class="pagination justify-content-center">
@@ -78,7 +73,5 @@
     <!-- 페이징처리 끝 -->
 <!-- ----------------------------------------------------------------------- -->    
 
-    <a href="{% url 'mainboard:article_create' %}" class="btn btn-primary">게시글 등록하기</a>
-    </ul>
 
 {% endblock %}
