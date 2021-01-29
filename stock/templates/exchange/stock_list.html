@@ -18,7 +18,7 @@
         {% for stock in stock_list %}
         <tr>
             <td>{{ forloop.counter }}</td>
-                <a href="{% url 'exchange:detail' stock.symbol %}">{{ stock.subject }}</a>
+                <a href="{% url 'exchange:stock_list' stock.symbol %}">{{ stock.subject }}</a>
             </td>
             <td>{{ stock.cur_price }}</td>
         </tr>

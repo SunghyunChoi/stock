@@ -6,7 +6,7 @@ app_name = 'exchange'
 
 urlpatterns = [
     path('', views.index, name='index'),
-    path('<int:symbol>/', views.detail, name='detail'),
+    path('<int:symbol>/', views.stock_list_page, name='stock_list'),
     path('buy/', views.buy, name='buy'),
     path('sell/', views.sell, name='sell')
     #path('article/create/', views.article_create, name='article_create'),

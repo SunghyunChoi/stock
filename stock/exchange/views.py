@@ -35,13 +35,22 @@ def index(request):
     return render(request, 'exchange/stock_list.html', context)
 
 
-    # return HttpResponse("exchange")
+# return HttpResponse("exchange")
 # 그래프 보여주는 부분 (수정 예정)
 # home.html(가칭)에 img src 에도 추가해줘야함
 
-def stock_list_page(request, symbol):
-    "작업중"
-    stock_list = Stock_list.objects.get(id=symbol)
+def stock_list_page(request):
+    stock_list = Stock_list.objects.get()
+    context = {'stock_list': stock_list}
+    return render(request, 'exchange/stock_list_page.html', context)
+
+
+
+def find_stock(request):
+    if request.user.is_authenticated:
+        userID = request.user.id
+    stock_requested = str(request.GET.get('stock_name', None))
+    stock_list = stock_requested.objects.get(id=stock_name)
     context = {'stock_list': stock_list}
     return render(request, 'exchange/stock_list_page.html', context)
 
