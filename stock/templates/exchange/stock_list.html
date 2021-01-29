@@ -17,9 +17,11 @@
         {% if stock_list %}
         {% for stock in stock_list %}
         <tr>
-            <td>{{ forloop.counter }}</td>
-                <a href="{% url 'exchange:stock_list' stock.symbol %}">{{ stock.subject }}</a>
-            </td>
+            <td>{{ stock.market_name }}</td>
+            <td>{{ stock.symbol }}</td>
+            <td>{{ stock.stock_name }}</td>
+
+                {% comment %} <a href="{% url 'exchange:stock_list' stock.symbol %}">{{ stock.stock_name }}</a> {% endcomment %}
             <td>{{ stock.cur_price }}</td>
         </tr>
         {% endfor %}

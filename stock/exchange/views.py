@@ -40,9 +40,9 @@ def index(request):
 # home.html(가칭)에 img src 에도 추가해줘야함
 
 def stock_list_page(request):
-    stock_list = Stock_list.objects.get()
+    stock_list = Stock_list.objects.all()
     context = {'stock_list': stock_list}
-    return render(request, 'exchange/stock_list_page.html', context)
+    return render(request, 'exchange/stock_list.html', context)
 
 
 
