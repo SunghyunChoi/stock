@@ -144,3 +144,4 @@ MEDIA_URL = '/media/'
 
 LOGIN_REDIRECT_URL = "/mainboard/"
 LOGOUT_REDIRECT_URL = "/mainboard/"
+AUTH_USER_MODEL = 'common.MyUser'

@@ -1,14 +1,13 @@
 from django.contrib.auth import authenticate, login
 from django.shortcuts import render, redirect
-from common.forms import UserForm
-
+from common.forms import UserForm, SignupForm
 
 def signup(request):
     """
     계정생성
     """
     if request.method == "POST":
-        form = UserForm(request.POST)
+        form = SignupForm(request.POST)
         if form.is_valid():
             form.save()
             username = form.cleaned_data.get('username') # 이름 가져오기
@@ -17,5 +16,5 @@ def signup(request):
             login(request, user)
             return redirect('mainboard:index')
     else:
-        form = UserForm()
+        form = SignupForm()
     return render(request, 'common/signup.html', {'form': form})
