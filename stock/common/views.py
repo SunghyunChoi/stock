@@ -2,6 +2,13 @@ from django.contrib.auth import authenticate, login
 from django.shortcuts import render, redirect
 from common.forms import UserForm, SignupForm
 
+def home(request):
+    """
+    홈페이지
+    """
+    
+    return render('common/home.html')
+
 def signup(request):
     """
     계정생성
