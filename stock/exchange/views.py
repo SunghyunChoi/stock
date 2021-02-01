@@ -58,11 +58,10 @@ def index(request):
 # 그래프 보여주는 부분 (수정 예정)
 # home.html(가칭)에 img src 에도 추가해줘야함
 
-# def stock_list_page(request):
-
-#     stock_list = Stock_list.objects.all()
-#     context = {'stock_list': stock_list}
-#     return render(request, 'exchange/stock_list.html', context)
+def stock_list_page(request, symbol):
+    stock = Stock_list.objects.get(symbol=symbol)
+    context = {'stock': stock}
+    return render(request, 'exchange/stock_page.html', context)
 
 
 

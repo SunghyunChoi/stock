@@ -7,12 +7,13 @@ def home(request):
     홈페이지
     """
     
-    return render('common/home.html')
+    return render(request, 'common/home.html')
 
 def signup(request):
     """
     계정생성
     """
+    
     if request.method == "POST":
         form = SignupForm(request.POST)
         if form.is_valid():
