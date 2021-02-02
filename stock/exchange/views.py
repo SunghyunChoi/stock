@@ -7,7 +7,8 @@ matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import matplotlib.gridspec as gridspec
 import matplotlib.ticker as ticker
-from mplfinance.original_flavor import candlestick2_ochl
+import matplotlib.font_manager as fm
+from mplfinance.original_flavor import candlestick2_ohlc
 ########################################################
 from django.shortcuts import render
 from django.http import HttpResponse
@@ -57,7 +58,8 @@ def index(request):
 # ----------------------------------- [페이징] --------------------------- #
 
 
-# 예은 : 그래프 만드는 부분 추가했습니다
+# 예은 : 그래프 만드는 부분 추가했습니다재 (21.02.01)
+# 예은 할일 : cur_price를 현재가로 불러오도록 (근데 이렇게하면 실시간 업데이트 or 호가창 필요), 전일대비 몇퍼 증감인지 보여주기
 def stock_list_page(request, symbol):
     stock = Stock_list.objects.get(symbol=symbol)
     graph_uri = graph(request, symbol)
@@ -77,27 +79,27 @@ def find_stock(request):
 
 def graph(request, symbol):
     stock = Stock_list.objects.get(symbol=symbol)
+    title_font_name = 'sans-serif'
+    tick_label_font_name = 'sans-serif'
 
     # 봉차트 그리기
-    # 음봉이 안나와요 선생님 ..  수정 .. 해야합니다 ..
     now = datetime.datetime.now()
     half_year = (now - datetime.timedelta(days=180)).strftime('%Y-%m-%d')
     df_specific = fdr.DataReader(symbol, half_year)
 
-    df_specific['MA3'] = df_specific['Close'].rolling(3).mean()
     df_specific['MA5'] = df_specific['Close'].rolling(5).mean()
     df_specific['MA10'] = df_specific['Close'].rolling(10).mean()
-    df_specific['MA60'] = df_specific['Close'].rolling(60).mean()
-    df_specific[['Close','MA3','MA5','MA10']].plot()
+    df_specific['MA20'] = df_specific['Close'].rolling(20).mean()
+    df_specific[['Close','MA5','MA10','MA20']].plot()
 
     fig = plt.figure(figsize=(20,10))
     ax = fig.add_subplot(111)
     index = df_specific.index.astype('str') # 캔들스틱 x축이 str로 들어감
 
     # 이동평균선 그리기
-    ax.plot(index, df_specific['MA3'], label='MA3', linewidth=0.7)
-    ax.plot(index, df_specific['MA5'], label='MA5', linewidth=0.7)
-    ax.plot(index, df_specific['MA10'], label='MA10', linewidth=0.7)
+    ax.plot(index, df_specific['MA5'], label='5days MA', linewidth=0.7)
+    ax.plot(index, df_specific['MA10'], label='10days MA', linewidth=0.7)
+    ax.plot(index, df_specific['MA20'], label='20days MA', linewidth=0.7)
 
     # X축 티커 숫자 20개로 제한
     ax.xaxis.set_major_locator(ticker.MaxNLocator(20))
@@ -107,13 +109,13 @@ def graph(request, symbol):
     ax.set_xlabel('Date')
 
     # 캔들차트 그리기
-    candlestick2_ochl(ax, df_specific['Open'], df_specific['High'],
+    candlestick2_ohlc(ax, df_specific['Open'], df_specific['High'],
                       df_specific['Low'], df_specific['Close'],
                       width=0.5, colorup='r', colordown='b')
     ax.legend()
     plt.grid()
 
-    plt.plot(range(10))
+    plt.plot()
     fig = plt.gcf()
     buf = io.BytesIO()
     fig.savefig(buf, format='png')
