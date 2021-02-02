@@ -28,9 +28,9 @@
         <tr>
             <td>{{ stock.market_name }}</td>
             <td>{{ stock.symbol }}</td>
-            <td>{{ stock.stock_name }}</td>
-
-                {% comment %} <a href="{% url 'exchange:stock_list' stock.symbol %}">{{ stock.stock_name }}</a> {% endcomment %}
+            <td>
+                <a href="{% url 'exchange:stock_list_page' stock.symbol %}">{{ stock.stock_name }}</a>
+            </td>
             <td>{{ stock.cur_price }}</td>
         </tr>
         {% endfor %}
