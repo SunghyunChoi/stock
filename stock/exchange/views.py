@@ -281,3 +281,12 @@ def transaction_save(user, stock, quantity, type): # type : buy = 1, sell = 0
             #Update user cash
         user.cash = user.cash + cur_price * quantity
         user.save()
+
+def mypage(request):
+    if request.user.is_authenticated:
+        userID = request.user.id
+    user = MyUser.objects.get(id=userID)
+    userResult = User_result.objects.all(user_ID=user.id)
+    context = {'user_result': userResult}
+
+    return render(request, 'exchange/mypage.html', context)
