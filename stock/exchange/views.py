@@ -253,6 +253,7 @@ def transaction_save(user, stock, quantity, type): # type : buy = 1, sell = 0
     if type:#BUY
         try:
             user_result = User_result.objects.get(user_ID=user.id, stock_ID=stock.id)
+            user_result.avg_purchase_price = (user_result.total_Qty * user_result.avg_purchase_price + quantity * cur_price) / (user_result.total_Qty + quantity)
             user_result.total_Qty += quantity
             user_result.save()
         except Exception as e:
@@ -286,7 +287,7 @@ def mypage(request):
     if request.user.is_authenticated:
         userID = request.user.id
     user = MyUser.objects.get(id=userID)
-    userResult = User_result.objects.all(user_ID=user.id)
+    userResult = User_result.objects.filter(user_ID=user.id)
     context = {'user_result': userResult}
 
     return render(request, 'exchange/mypage.html', context)
