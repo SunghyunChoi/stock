@@ -40,12 +40,6 @@ def index(request):
 # ---------------------------------------------------------------------------- #
 
 # ----------------------------------- [페이징] --------------------------- #
-    # stock_name 이 str인데 정렬이 성립하는가? -stock_name을 symbol순으로 바꿀 것
-    # stock_list = Stock_list.objects.order_by('stock_name')
-
-    # 입력 파라미터
-    # page = request.GET.get('page', '1')  # 페이지
-
     # 페이징처리
     paginator = Paginator(stock_list, 20)  # 페이지당 10개씩 보여주기
     page_obj = paginator.get_page(page)
