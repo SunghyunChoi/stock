@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+{% extends 'temp_base.html' %}
+{% block content %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<p>
+<h2>주식 보유 현황 <span class="badge badge-secondary"></span></h2  >
+</p>
+<br>
+<table class="table">
+<thead>
+<tr>
+            <th>종목이름</th>
+            <th>보유랑</th>
+            <th>매수단가</th>
+        </tr>
+        </thead>
+        <tbody>
+            {% if user_result %}
+                    {% for result in user_result %}
+                    <tr>
+                        <td>{{ result.stock_ID.stock_name }}</td>
+                        <td>{{ result.total_Qty }}</td>
+                        <td>{{ result.avg_purchase_price }}</td>
+                    </tr>
+                    {% endfor %}
+        {% else %}
+        <tr>
+            <td colspan="3">보유한 종목이 없습니다.</td>
+        </tr>
+        {% endif %}
+        </tbody>
+    </table>
+</body>
+</html>
+{% endblock %}
