@@ -61,7 +61,13 @@ def index(request):
 # 예은 : 그래프 만드는 부분 추가했습니다재 (21.02.01)
 # 예은 할일 : cur_price를 현재가로 불러오도록 (근데 이렇게하면 실시간 업데이트 or 호가창 필요), 전일대비 몇퍼 증감인지 보여주기
 def stock_list_page(request, symbol):
+    today = datetime.datetime.today().strftime('%Y-%m-%d')
     stock = Stock_list.objects.get(symbol=symbol)
+    df_specific = fdr.DataReader(symbol, today)
+    if (df_specific.empty):
+        pass
+    else:
+        stock.cur_price = int(df_specific['Close'][0])
     graph_uri = graph(request, symbol)
     context = {'stock': stock, 'data': graph_uri}
     return render(request, 'exchange/stock_page.html', context)
