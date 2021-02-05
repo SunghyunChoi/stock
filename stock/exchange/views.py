@@ -18,7 +18,7 @@ from common.models import MyUser
 from django.utils import timezone
 from django.core.paginator import Paginator # 페이징 관련 (글 목록)
 from django.db.models import Q # 검색 관련
-import datetime
+from datetime import datetime, timedelta
 
 
 # Create your views here.
@@ -58,18 +58,20 @@ def index(request):
 # ----------------------------------- [페이징] --------------------------- #
 
 
-# 예은 : 그래프 만드는 부분 추가했습니다재 (21.02.01)
+# 예은 : 그래프 만드는 부분 추가했습니다 (21.02.01)
 # 예은 할일 : cur_price를 현재가로 불러오도록 (근데 이렇게하면 실시간 업데이트 or 호가창 필요), 전일대비 몇퍼 증감인지 보여주기
 def stock_list_page(request, symbol):
-    today = datetime.datetime.today().strftime('%Y-%m-%d')
+    today = datetime.today()
+    yesterday = datetime.today() - timedelta(days=1)
     stock = Stock_list.objects.get(symbol=symbol)
-    df_specific = fdr.DataReader(symbol, today)
-    if (df_specific.empty):
-        pass
-    else:
-        stock.cur_price = int(df_specific['Close'][0])
+    df_specific = fdr.DataReader(symbol, today.strftime('%Y-%m-%d'))
+    stock.cur_price = int(df_specific['Close'][0]) # 맨위 날짜 읽는거니까 오늘 정가 empty여도 가장 최근값 불러옴
+    yesterday_stock = fdr.DataReader(symbol, yesterday.strftime('%Y-%m-%d'))
+    yesterday_price = int(yesterday_stock['Close'][0])  # 맨위 날짜 읽는거니까 어 정보가 empty여도 가장 최근값 불러옴제 -> 연휴 예외처리해야함
+    difference = stock.cur_price - yesterday_price
+    difference_percent = round((difference / yesterday_price) * 100, 2)
     graph_uri = graph(request, symbol)
-    context = {'stock': stock, 'data': graph_uri}
+    context = {'stock': stock, 'data': graph_uri, 'yesterday':yesterday_price, 'difference':difference, 'diff_per':difference_percent}
     return render(request, 'exchange/stock_page.html', context)
 
 
@@ -89,8 +91,8 @@ def graph(request, symbol):
     tick_label_font_name = 'sans-serif'
 
     # 봉차트 그리기
-    now = datetime.datetime.now()
-    half_year = (now - datetime.timedelta(days=180)).strftime('%Y-%m-%d')
+    now = datetime.now()
+    half_year = (now - timedelta(days=180)).strftime('%Y-%m-%d')
     df_specific = fdr.DataReader(symbol, half_year)
 
     df_specific['MA5'] = df_specific['Close'].rolling(5).mean()
