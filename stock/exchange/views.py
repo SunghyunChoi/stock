@@ -58,14 +58,36 @@ def stock_list_page(request, symbol):
     today = datetime.today()
     yesterday = datetime.today() - timedelta(days=1)
     stock = Stock_list.objects.get(symbol=symbol)
+
     df_specific = fdr.DataReader(symbol, today.strftime('%Y-%m-%d'))
     stock.cur_price = int(df_specific['Close'][0]) # 맨위 날짜 읽는거니까 오늘 정가 empty여도 가장 최근값 불러옴
+
+    # 전일 데이터 불러오기 (주말, 연휴인 경우 data없으므로 data있을때까지 거슬러올라가기)
     yesterday_stock = fdr.DataReader(symbol, yesterday.strftime('%Y-%m-%d'))
-    yesterday_price = int(yesterday_stock['Close'][0])  # 맨위 날짜 읽는거니까 어 정보가 empty여도 가장 최근값 불러옴제 -> 연휴 예외처리해야함
+    date = 1
+    while (1):
+        yesterday_stock = fdr.DataReader(symbol, yesterday.strftime('%Y-%m-%d'), today.strftime('%Y-%m-%d'))
+        if (len(yesterday_stock) > 1):
+            yesterday_price = int(yesterday_stock['Close'][0])
+            break
+        else:
+            date += 1
+            yesterday = datetime.today() - timedelta(days=date)
+    yesterday_price = int(yesterday_stock['Close'][0])
+
     difference = stock.cur_price - yesterday_price
     difference_percent = round((difference / yesterday_price) * 100, 2)
+    # 색깔을 위한 Flag
+    if difference > 0:
+        flag = 1
+    elif difference < 0:
+        flag = -1
+    else:
+        flag = 0
+
     graph_uri = graph(request, symbol)
-    context = {'stock': stock, 'data': graph_uri, 'yesterday':yesterday_price, 'difference':difference, 'diff_per':difference_percent}
+
+    context = {'stock': stock, 'data': graph_uri, 'yesterday':yesterday_price, 'difference':difference, 'diff_per':difference_percent, 'flag':flag}
     return render(request, 'exchange/stock_page.html', context)
 
 

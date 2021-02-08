@@ -81,14 +81,22 @@ plt.rcParams["axes.grid"] = True
 # plt.show()
 
 today = datetime.today().strftime('%Y-%m-%d')
-yesterday = (datetime.today() - timedelta(days=6)).strftime('%Y-%m-%d')
+yesterday = (datetime.today() - timedelta(days=1)).strftime('%Y-%m-%d')
 df_specific = fdr.DataReader('005930', today)
 cur_price = int(df_specific['Close'][0])
 # if (df_specific.empty):
 #     pass
 # else:
-dd = fdr.DataReader('005930', yesterday)
-dd_price = int(dd['Close'][0])
+date = 1
+while(1):
+    dd = fdr.DataReader('005930', yesterday, today)
+    if (len(dd) > 1):
+        dd_price = int(dd['Close'][0])
+        break
+    else:
+        date += 1
+        yesterday = (datetime.today() - timedelta(days=date)).strftime('%Y-%m-%d')
+
 print(today, cur_price)
 print(df_specific,"\n\n\n")
 print(yesterday, dd_price)

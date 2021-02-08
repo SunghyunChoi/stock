@@ -44,7 +44,15 @@
 <h1> stock </h1>
     <h1> 종목명 : {{ stock.stock_name }} </h1>
     <h1> 현재가 : {{ stock.cur_price }} </h1>
-    <h1> 전일대비 : {{ difference }}, {{ diff_per }}%</h1>
+    {% if flag == 1 %}
+      <h1 style="color: red"> 전일대비 : {{ difference }}, {{ diff_per }}%</h1>
+    {% elif flag == -1 %}
+      <h1 style="color: blue"> 전일대비 : {{ difference }}, {{ diff_per }}%</h1>
+    {% elif flag == 0%}
+     <h1> 전일대비 : {{ difference }}, {{ diff_per }}%</h1>
+    {% endif %}
+
+
     <img src="data:image/png;base64, {{ data }}" alt="" height="500" width="1000">
 
 
