@@ -3,7 +3,7 @@
 {% block content %}
 
 <!-- ------------------------------- ↓검색기능↓  -------------------------------- -->
-<style type="text/css">
+{% comment %} <style type="text/css">
     .search-window {
         position: absolute;
         text-align: center;
@@ -25,7 +25,6 @@
     }
 </style>
     <div class="search-window">
-<span class="content">
         <div class="row justify-content-end my-3">
             <div class="col-4 input-group">
                 <input type="text" class="form-control kw" value="{{ kw|default_if_none:'' }}" id="enter_search">
@@ -34,18 +33,95 @@
                 </div>
             </div>
         </div>
-    </span>
-<span class="blank"></span>
-    </div>
+    </div> {% endcomment %}
 <!-- ------------------------------- ↑검색기능↑ -------------------------------- -->
 
+<!-- ------------------------------- ↓ Style ↓  -------------------------------- -->
+ <style type="text/css">
+            {% comment %} * {
+                font-family: "Stylish", sans-serif;
+            }
 
+            .wrap {
+                width: 900px;
+                margin: auto;
+            }
 
-<h1> stock </h1>
-    <h1> 종목명 : {{ stock.stock_name }} </h1>
-    <h1> 현재가 : {{ stock.cur_price }} </h1>
-    <h1> 전일대비 : {{ difference }}, {{ diff_per }}%</h1>
+            .comment {
+                color: blue;
+                font-weight: bold;
+            }
+
+            #post-box {
+                width: 500px;
+                margin: 20px auto;
+                padding: 50px;
+                border: black solid;
+                border-radius: 5px;
+            } {% endcomment %}
+
+            .stock-info {
+                width: 500px;
+                margin: 20px auto;
+                padding: 50px;
+                border: black solid;
+                border-radius: 5px;
+            }
+
+            .exchange-window {
+                {% comment %} width: 500px; {% endcomment %}
+                margin: 20px auto;
+                padding: 50px;
+                border: black solid;
+                border-radius: 5px;
+            }
+
+            
+        </style>
+<!-- ------------------------------- ↑ Style ↑ -------------------------------- -->
+
+    <div class = "stock-info">
+    <h1 style> {{ stock.stock_name }} ({{ stock.symbol }}) </h1>
+    <h4 style = "display:inline"> {{ stock.cur_price }} </h4>
+        {% if difference > 0 %}
+            <h4 style="color: red";  "display:inline"> ▲ {{ difference }}, {{ diff_per }}%</h4>
+        {% elif differnce < 0 %}
+            <h4 style="color: blue";  "display:inline"> ▼ {{ difference }}, {{ diff_per }}%</h4>
+        {% else %}
+            <h4> ━ {{ difference }}, {{ diff_per }}%</h4>
+        {% endif %}
+    </div>
     <img src="data:image/png;base64, {{ data }}" alt="" height="500" width="1000">
+
+<div class = "exchange-window">
+<!-- ------------------------------- ↓ Exchange Nav-Bar ↓  -------------------------------- -->
+    <ul class="nav nav-tabs" id="myTab" role="tablist">
+        <li class="nav-item" role="presentation">
+            <a class="nav-link active" id="home-tab" data-bs-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Home</a>
+        </li>
+        <li class="nav-item" role="presentation">
+            <a class="nav-link" id="profile-tab" data-bs-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Profile</a>
+        </li>
+        <li class="nav-item" role="presentation">
+            <a class="nav-link" id="contact-tab" data-bs-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Contact</a>
+        </li>
+    </ul>
+    <div class="tab-content" id="myTabContent">
+    <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">...</div>
+    <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">...</div>
+    <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">...</div>
+<!-- ------------------------------- ↑ Exchange Nav-Bar ↑  -------------------------------- -->
+
+</div>
+
+
+
+
+
+
+</div> 
+
+
 
 
 {% endblock %}
