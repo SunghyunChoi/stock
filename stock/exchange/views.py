@@ -284,10 +284,14 @@ def transaction_save(user, stock, quantity, type): # type : buy = 1, sell = 0
         user.save()
 
 def mypage(request):
+    
     if request.user.is_authenticated:
         userID = request.user.id
+    
     user = MyUser.objects.get(id=userID)
     userResult = User_result.objects.filter(user_ID=user.id)
-    context = {'user_result': userResult}
-
+    transactions = Transaction_history.objects.filter(user_ID=user.id)
+    
+    context = {'user_result': userResult, 'transactions' : transactions}
+    
     return render(request, 'exchange/mypage.html', context)

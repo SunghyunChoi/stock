@@ -1,40 +1,89 @@
 <!DOCTYPE html>
 {% extends 'temp_base.html' %}
 {% block content %}
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-<p>
-<h2>주식 보유 현황 <span class="badge badge-secondary"></span></h2  >
-</p>
-<br>
-<table class="table">
-<thead>
-<tr>
-            <th>종목이름</th>
-            <th>보유랑</th>
-            <th>매수단가</th>
-        </tr>
-        </thead>
-        <tbody>
-            {% if user_result %}
-                    {% for result in user_result %}
+    <html lang="en">
+        <head>
+            <meta charset="UTF-8">
+            <title>Title</title>
+        </head>
+        <body>
+
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+  <li class="nav-item">
+    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">주식 보유 현황</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">매수/매도 내역</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Contact</a>
+  </li>
+</ul>
+<div class="tab-content" id="myTabContent">
+  <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+    <table class="table">
+                <thead>
                     <tr>
-                        <td>{{ result.stock_ID.stock_name }}</td>
-                        <td>{{ result.total_Qty }}</td>
-                        <td>{{ result.avg_purchase_price }}</td>
+                        <th>종목이름</th>
+                        <th>보유랑</th>
+                        <th>매수단가</th>
                     </tr>
-                    {% endfor %}
-        {% else %}
-        <tr>
-            <td colspan="3">보유한 종목이 없습니다.</td>
-        </tr>
-        {% endif %}
-        </tbody>
-    </table>
+                </thead>
+                <tbody>
+                    {% if user_result %}
+                        {% for result in user_result %}
+                            <tr>
+                                <td>{{ result.stock_ID.stock_name }}</td>
+                                <td>{{ result.total_Qty }}</td>
+                                <td>{{ result.avg_purchase_price }}</td>
+                            </tr>
+                        {% endfor %}
+                    {% else %}
+                        <tr>
+                            <td colspan="3">보유한 종목이 없습니다.</td>
+                        </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+  </div>
+  <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+    <table class="table">
+                <thead>
+                    <tr>
+                        <th>유저이름</th>
+                        <th>종목</th>
+                        <th>매수/매도</th>
+                        <th>수량</th>
+                        <th>단가</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if transactions %}
+                        {% for transaction in transactions %}
+                            <tr>
+                                <td>{{ transaction.user_ID.username }}</td>
+                                <td>{{ transaction.stock_ID.stock_name }}</td>
+                                {% if transaction.purchase %}
+                                    <td>매수</td>
+                                {% else %}            
+                                    <td>매도</td>
+                                {% endif %}
+                                <td>{{ transaction.Qty }}</td>
+                                <td>{{ transaction.cur_price }}</td>
+                            </tr>
+                        {% endfor %}
+                    {% else %}
+                        <tr>
+                            <td colspan="3">보유한 종목이 없습니다.</td>
+                        </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+  
+  </div>
+  <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">...</div>
+</div>
+
 </body>
 </html>
 {% endblock %}
