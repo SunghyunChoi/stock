@@ -2,9 +2,49 @@
 {% comment %} {% load pybo_filter %} {% endcomment %}
 {% block content %}
 
+<!-- ------------------------------- ↓검색기능↓  -------------------------------- -->
+<style type="text/css">
+    .search-window {
+        position: absolute;
+        text-align: center;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        font-size: 50px;
+    }
+    .search-window .content {
+        display: inline-block;
+        vertical-align: middle
+    }
+    .search-window .blank {
+        display: inline-block;
+        width: 0;
+        height: 100%;
+        vertical-align: middle
+    }
+</style>
+    <div class="search-window">
+<span class="content">
+        <div class="row justify-content-end my-3">
+            <div class="col-4 input-group">
+                <input type="text" class="form-control kw" value="{{ kw|default_if_none:'' }}" id="enter_search">
+                <div class="input-group-append">
+                    <button class="btn btn-outline-secondary" type="button" id="btn_search">종목 찾기</button>
+                </div>
+            </div>
+        </div>
+    </span>
+<span class="blank"></span>
+    </div>
+<!-- ------------------------------- ↑검색기능↑ -------------------------------- -->
+
+
+
 <h1> stock </h1>
     <h1> 종목명 : {{ stock.stock_name }} </h1>
     <h1> 현재가 : {{ stock.cur_price }} </h1>
+    <h1> 전일대비 : {{ difference }}, {{ diff_per }}%</h1>
     <img src="data:image/png;base64, {{ data }}" alt="" height="500" width="1000">
 
 

@@ -1,18 +1,24 @@
 {% extends 'temp_base.html' %}
+{% comment %} {% extends 'exchange/exchange_base.html' %} {% endcomment %}
 {% comment %} {% load pybo_filter %} {% endcomment %}
 {% block content %}
 <div class="container my-3">
-<!------------------- ↓검색 기능↓ ---------------------->
+
+<!-- ------------------------------- 검색기능  -------------------------------- -->
     <div class="row justify-content-end my-3">
         <div class="col-4 input-group">
             <input type="text" class="form-control kw" value="{{ kw|default_if_none:'' }}" id="enter_search">
             <div class="input-group-append">
-                <button class="btn btn-outline-secondary" type="button" id="btn_search" >찾기</button>
+                <button class="btn btn-outline-secondary" type="button" id="btn_search">종목 찾기</button>
             </div>
-        </div>
+       </div>
     </div>
+<!-- ------------------------------- 검색기능 -------------------------------- -->
 
-<!------------------- ↑검색 기능↑ ---------------------->
+
+
+
+
     <table class="table">
         <thead>
         <tr class="thead-dark">
@@ -42,7 +48,15 @@
         </tbody>
     </table>
 </div>
-             
+<!-- ------------------------------- [edit] -------------------------------- -->
+<div class="row justify-content-end my-3">
+    <div class="col-4 input-group">
+        <input type="text" class="form-control kw" value="{{ kw|default_if_none:'' }}" id="enter_search">
+        <div class="input-group-append">
+            <button class="btn btn-outline-secondary" type="button" id="btn_search">종목 찾기</button>
+        </div>
+    </div>
+</div>
 <!-- ------------------------------- [edit] -------------------------------- -->
     <!-- 페이징처리 시작 -->
     <ul class="pagination justify-content-center">
@@ -118,7 +132,6 @@ $(document).ready(function (){
             $("#searchForm").submit();
         }
     });
-
 });
 </script>
 {% endblock %}
