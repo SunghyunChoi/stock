@@ -81,12 +81,12 @@
     <div class = "stock-info">
     <h1 style> {{ stock.stock_name }} ({{ stock.symbol }}) </h1>
     <h4 style = "display:inline"> {{ stock.cur_price }} </h4>
-        {% if difference > 0 %}
-            <h4 style="color: red";  "display:inline"> ▲ {{ difference }}, {{ diff_per }}%</h4>
-        {% elif differnce < 0 %}
-            <h4 style="color: blue";  "display:inline"> ▼ {{ difference }}, {{ diff_per }}%</h4>
-        {% else %}
-            <h4> ━ {{ difference }}, {{ diff_per }}%</h4>
+        {% if flag == 1 %}
+          <h1 style="color: red"> ▲ {{ difference }}, {{ diff_per }}%</h1>
+        {% elif flag == -1 %}
+          <h1 style="color: blue"> ▼ {{ difference }}, {{ diff_per }}%</h1>
+        {% elif flag == 0%}
+         <h1> ━ {{ difference }}, {{ diff_per }}%</h1>
         {% endif %}
     </div>
 
