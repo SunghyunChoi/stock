@@ -10,7 +10,7 @@ import matplotlib.ticker as ticker
 import matplotlib.font_manager as fm
 from mplfinance.original_flavor import candlestick2_ohlc
 ########################################################
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.conf import settings
 from .models import Stock_list, User_result, Transaction_history
@@ -311,7 +311,8 @@ def mypage(request):
     
     if request.user.is_authenticated:
         userID = request.user.id
-    
+    else:
+        return redirect('common:login')
     user = MyUser.objects.get(id=userID)
     userResult = User_result.objects.filter(user_ID=user.id)
     transactions = Transaction_history.objects.filter(user_ID=user.id)
